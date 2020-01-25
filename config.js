@@ -5,6 +5,9 @@ var config={
     width:800,
     height:600,
     parent:'my-game',
+    scale: {
+        mode: Phaser.Scale.FIT,
+    },
     physics:{
         default:'arcade',
         arcade:{
