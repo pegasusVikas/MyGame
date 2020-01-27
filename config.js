@@ -15,7 +15,7 @@ var config={
     scene:[sceneB,sceneA]
 }
  if(window.innerWidth<400)
-     config.scale=scale: {mode: Phaser.Scale.FIT};
+     config.scale={mode: Phaser.Scale.FIT};
 let speed=500;
 let cursors;
 let player;
