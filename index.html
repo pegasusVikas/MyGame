@@ -8,9 +8,172 @@
   <script type="text/javascript" src="phaser.min.js"></script>
 </head>
 <body>
-  <div id='my-game'></div>
-    <script type="text/javascript" src="main.js"></script>
-    <script type="text/javascript" src="mainMenu.js"></script>
-    <script type="text/javascript" src="config.js"></script>
+  <div id='my-game' ></div>
+  <div id="list"></div>
+  <style>
+  #a1 {
+    background:rgb(255,0,0);
+    color:rgb(255,255,255);
+  }
+  #a2 {
+    background: rgb(218,0,0);
+    color:rgb(255,255,255);
+  }
+  #a3 {
+    background: rgb(182,0,0);
+    color:rgb(255,255,255);
+  }
+  #a4 {
+    background:rgb(145,0,0);
+    color:rgb(255,255,255);
+  }
+  #a5 {
+    background:rgb(109,0,0);
+    color:rgb(255,255,255);
+  }
+  #a6 {
+    background:rgb(72,0,0);
+    color:rgb(255,255,255);
+  }
+  #a7 {
+    background:rgb(36,0,0);
+    color:rgb(255,255,255);
+  }
+  .label {
+    margin:0;
+    padding: 5px;
+  }
+ 
+  </style>
+
+<script type="text/javascript" src="main.js"></script>
+<script type="text/javascript" src="mainMenu.js"></script>
+<script type="text/javascript" src="config.js"></script>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.7.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCbsdAPZJPjuUF0wQF2hHANnXwDjCJ7YBg",
+    authDomain: "game-6a343.firebaseapp.com",
+    databaseURL: "https://game-6a343.firebaseio.com",
+    projectId: "game-6a343",
+    storageBucket: "game-6a343.appspot.com",
+    messagingSenderId: "187592747803",
+    appId: "1:187592747803:web:101a7f95f390e3543c81be",
+    measurementId: "G-N274X0P28P"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+
+  //check if it is new highscore
+  const leaderboard=(score)=>{
+    firebase.database().ref("/leaderboard").orderByChild('score').limitToFirst(7).on('value',(snapshot)=>{
+      let obj1={};
+     let names=Object.keys(snapshot.val());
+    for(i=0;i<=6;i++){
+      console.log(snapshot.val()[names[i]]);
+      obj1[names[i]]=snapshot.val()[names[i]].score;
+    }
+    let scores=Object.values(obj1);
+    scores.sort((a,b)=>{
+      return b-a;}
+     );
+      if(scores[6]<score){
+        //new highscore
+      if(snapshot.val()[localStorage.getItem('player')]){
+      if(snapshot.val()[localStorage.getItem('player')].score<score)
+      submitScore(score);
+      }
+      else{
+        submitScore(score);
+      }
+      }
+    });
+  }
+  //submit score
+  const submitScore=(score)=>{
+   let ref=firebase.database().ref("/leaderboard/"+localStorage.getItem('player')).update({
+     "score":score
+   }); 
+   
+  }
+
+  //creating the list
+  const list=(snapshot)=>{
+    let obj1={};
+    console.log(snapshot.val());
+    let names=Object.keys(snapshot.val());
+    for(i=0;i<=6;i++){
+      console.log(snapshot.val());
+      obj1[names[i]]=snapshot.val()[names[i]].score;
+    }
+    let scores=Object.values(obj1);
+    scores.sort((a,b)=>{
+      return b-a;}
+);
+    console.log(scores)
+    for(i=0;i<=6;i++){
+      let header=document.getElementById(`h${i+1}`);
+      header.innerHTML=`${i+1}    ${getKeyByValue(obj1,scores[i])}      Score:${scores[i]}`;
+    }
+  }
+  
+  function getKeyByValue(object, value) {
+  return Object.keys(object).find(key => object[key] === value);
+}
+
+  if(!localStorage.getItem('player')){
+    const promt=()=>{
+     let player= prompt("please your name to submit to leaderboards");
+     if(player==''){
+       player=promt();
+     }
+     return player;
+    }
+  let player =promt();
+  localStorage.setItem('player',player);
+  }
+
+  firebase.database().ref("/leaderboard").orderByChild('score').limitToFirst(7).on('value',(snapshot)=>{
+  setTimeout(()=>{
+    console.log("timeout")
+    list(snapshot)},1);
+
+  })
+   
+
+ const create=()=>{
+  let listObj=document.getElementById("my-game");
+    let header=document.createElement("h1");
+    header.id="header"
+    header.innerHTML="LEADERBOARD"
+    header.style.border="3px solid black";
+    header.style.margin="0px";
+    header.style.padding="15px";
+    listObj.appendChild(header);
+    for(i=0;i<=6;i++){
+      let obj =document.createElement("div");
+      obj.className="list-item"
+      let header=document.createElement("h1");
+      obj.appendChild(header);
+      header.className="label";
+      header.id=`h${i+1}`
+      obj.id="a"+(i+1);
+      listObj.appendChild(obj);
+    }}
+    setTimeout(()=>{create()},1);
+  
+</script>
+    
+    
 </body>
 </html>

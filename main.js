@@ -305,6 +305,7 @@ if(player.y>600||player.x<-600){
     gv=1;
     if(gv==1){
         //
+        leaderboard(score);
         console.log("SCORE"+score);
         score=0;
         retry.setInteractive();

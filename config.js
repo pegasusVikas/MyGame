@@ -5,6 +5,9 @@ var config={
     width:800,
     height:600,
     parent:'my-game',
+  // scale: {
+    //   mode: Phaser.Scale.FIT,
+    //},
     physics:{
         default:'arcade',
         arcade:{
@@ -24,4 +27,5 @@ let doubleJump=0;
 let up;
 let itr=0;
 var game=new Phaser.Game(config);
+
 let pointer;
