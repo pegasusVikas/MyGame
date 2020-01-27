@@ -308,6 +308,7 @@ if(player.y>600||player.x<-600){
         leaderboard(score);
         console.log("SCORE"+score);
         score=0;
+        console.log("SCORE"+score);
         retry.setInteractive();
      retry.on('pointerup',()=>{
          retry.setAlpha(0.5);
