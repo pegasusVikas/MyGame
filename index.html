@@ -110,24 +110,27 @@
     let obj1={};
     console.log(snapshot.val());
     let names=Object.keys(snapshot.val());
-    for(i=0;i<=6;i++){
+    console.log("length +"+names.length)
+    for(i=0;i<names.length;i++){
       console.log(snapshot.val());
       obj1[names[i]]=snapshot.val()[names[i]].score;
     }
     let scores=Object.values(obj1);
     scores.sort((a,b)=>{
       return b-a;}
-);
-    console.log(scores)
+);   names.sort((a,b)=>{
+    return obj1[b]-obj1[a]
+})
+    console.log(names)
     for(i=0;i<=6;i++){
       let header=document.getElementById(`h${i+1}`);
-      header.innerHTML=`${i+1}    ${getKeyByValue(obj1,scores[i])} \t Score:${scores[i]}`;
+      header.innerHTML=`${i+1}    ${names[i]} \t Score:${scores[i]}`;
     }
   }
   
-  function getKeyByValue(object, value) {
+ /* function getKeyByValue(object, value) {
   return Object.keys(object).find(key => object[key] === value);
-}
+}*/
  
   if(!localStorage.getItem('player')){
     const promt=()=>{
@@ -141,9 +144,9 @@
   localStorage.setItem('player',player);
   }
 
-  firebase.database().ref("/leaderboard").orderByChild('score').limitToFirst(7).on('value',(snapshot)=>{
+  firebase.database().ref("/leaderboard").orderByChild('score').on('value',(snapshot)=>{
   setTimeout(()=>{
-    console.log("timeout")
+    console.log(snapshot.val());
     list(snapshot)},1);
 
   })
