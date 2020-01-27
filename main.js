@@ -304,12 +304,9 @@ if(player.y>600||player.x<-600){
     menu.setDepth(1.5);
     gv=1;
     if(gv==1){
-        //
-        score=0
+        console.log("SCORE"+score);
         leaderboard(score);
-        console.log("SCORE"+score);
         score=0;
-        console.log("SCORE"+score);
         retry.setInteractive();
      retry.on('pointerup',()=>{
          retry.setAlpha(0.5);
