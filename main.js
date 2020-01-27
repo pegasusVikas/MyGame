@@ -341,3 +341,4 @@ if(player.y>600||player.x<-600){
 }
 console.log(player.x);
 }}
+
