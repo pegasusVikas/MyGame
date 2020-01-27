@@ -46,6 +46,7 @@
  
   </style>
 
+<script src="https://kit.fontawesome.com/91a9b36c95.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="main.js"></script>
 <script type="text/javascript" src="mainMenu.js"></script>
 <script type="text/javascript" src="config.js"></script>
@@ -123,7 +124,7 @@
     console.log(scores)
     for(i=0;i<=6;i++){
       let header=document.getElementById(`h${i+1}`);
-      header.innerHTML=`${i+1}    ${getKeyByValue(obj1,scores[i])}      Score:${scores[i]}`;
+      header.innerHTML=`${i+1}    ${getKeyByValue(obj1,scores[i])} \t Score:${scores[i]}`;
     }
   }
   
@@ -154,11 +155,14 @@
  const create=()=>{
   let listObj=document.getElementById("my-game");
     let header=document.createElement("h1");
+    let icon=document.createElement("i");
+    icon.className="fas fa-trophy";
     header.id="header"
     header.innerHTML="LEADERBOARD"
     header.style.border="3px solid black";
     header.style.margin="0px";
     header.style.padding="15px";
+    header.appendChild(icon);
     listObj.appendChild(header);
     for(i=0;i<=6;i++){
       let obj =document.createElement("div");
