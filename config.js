@@ -17,7 +17,7 @@ var config={
     },
     scene:[sceneB,sceneA]
 }
-
+ 
 let speed=500;
 let cursors;
 let player;
