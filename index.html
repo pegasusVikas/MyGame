@@ -80,7 +80,7 @@
     firebase.database().ref("/leaderboard").orderByChild('score').limitToFirst(7).on('value',(snapshot)=>{
       let obj1={};
      let names=Object.keys(snapshot.val());
-    for(i=0;i<=6;i++){
+    for(i=0;i<names;i++){
       console.log(snapshot.val()[names[i]]);
       obj1[names[i]]=snapshot.val()[names[i]].score;
     }
@@ -88,7 +88,6 @@
     scores.sort((a,b)=>{
       return b-a;}
      );
-      if(scores[6]<score){
         //new highscore
       if(snapshot.val()[localStorage.getItem('player')]){
       if(snapshot.val()[localStorage.getItem('player')].score<score)
@@ -98,7 +97,6 @@
         submitScore(score);
         }
       }
-    });
   }
   //submit score
   const submitScore=(score)=>{
