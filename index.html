@@ -80,7 +80,7 @@
     firebase.database().ref("/leaderboard").orderByChild('score').limitToFirst(7).on('value',(snapshot)=>{
       let obj1={};
      let names=Object.keys(snapshot.val());
-    for(i=0;i<names;i++){
+    for(i=0;i<names.length;i++){
       console.log(snapshot.val()[names[i]]);
       obj1[names[i]]=snapshot.val()[names[i]].score;
     }
